@@ -15,84 +15,137 @@ var __extends = (this && this.__extends) || (function () {
 })();
 console.log('hello');
 //https://esnail.github.io/ts-gitbook/book/chapter2/readme.html
+//🌟可以给变量、函数的行参/返回值、数组内的对象做类型的声明
 //🔥Ts 基础数据类型 ——————————————————————————————————————————————————————————
 // boolean（布尔类型）
-// let flag:boolean = true
-// flag = false
+var flag = true;
+flag = false;
+//用 | 赋值多个字面量或者多个类型 ———— 联合类型
+var lk;
+var ll;
 // number（数字类型）
-// let num:number = 123;
-// num = 456
+var num = 123;
+num = 456;
 // string（字符串类型）
-// let str:string = 'this is ts'
-// str = 'test'
+var str = 'this is ts';
+str = 'test';
 // array（数组类型）
-// let arr:string[] = ['12', '23']
-// arr = ['45', '56']
-// tuple（元组类型,属于数组的一种,后续实例的类型得一致）
-//let tupleArr:[number, string, boolean] = [12, '34', true]
+var arrABC = ['12', '23'];
+arrABC = ['45', '56'];
+var arrCCC; //表示数字类型的数组
+arrCCC = [1, 2, 3];
+// tuple（元组类型,属于数组的一种,就是【固定长度】跟【类型】的数组,比如下面这个就是【固定】只有三个内容，【三种类型】）
+var tupleArr = [12, '34', true];
 // enum（枚举类型）
-// enum statusCode {
-//   success,
-//   fail,
-//   pending
-// }
-// let res:statusCode = statusCode.success;
-// console.log(res); // 0，如果标识符没有赋值，它的值就是下标，默认从 0 开始
-// enum statusCode {
-//   success = 2,
-//   fail,
-//   pending
-// }
-// let res1:statusCode = statusCode.success;
-// console.log(res1) // 2，指定的值
-// let res3:statusCode = statusCode.fail;
-// console.log(res1) // 3，若没指定，从指定的往后开始
-// any（任意类型, 表示可以指定任何类型的值。一般用于声明 dom 节点）
-//let num:any = 123;
-// num = 'str';
-// num = true;
-// let boxEl:any = document.getElementById('box'); // 声明一个 dom 节点
-// boxEl.style.color = 'pink';
+var statusCode;
+(function (statusCode) {
+    statusCode[statusCode["success"] = 0] = "success";
+    statusCode[statusCode["fail"] = 1] = "fail";
+    statusCode[statusCode["pending"] = 2] = "pending";
+})(statusCode || (statusCode = {}));
+//相当于从 statusCode 列举d出 success
+var res = statusCode.success;
+console.log(res); // 0，如果标识符没有赋值，它的值就是下标，默认从 0 开始
+(function (statusCode) {
+    statusCode[statusCode["success1"] = 2] = "success1";
+    statusCode[statusCode["fail2"] = 3] = "fail2";
+    statusCode[statusCode["pending3"] = 4] = "pending3";
+})(statusCode || (statusCode = {}));
+var res1 = statusCode.success;
+console.log(res1); // 2，指定的值
+var res3 = statusCode.fail;
+console.log(res1); // 3，若没指定，从指定的往后开始
+//枚举的场景，比如先定义一个枚举数组，然后再定义一个数据去使用枚举数组内的值
+var Gender;
+(function (Gender) {
+    Gender[Gender["Male"] = 0] = "Male";
+    Gender[Gender["Female"] = 1] = "Female";
+})(Gender || (Gender = {}));
+var ii;
+ii = {
+    name: 'Wang',
+    gender: Gender.Male
+};
+console.log(ii.gender === Gender.Female);
+// any（任意类型, 表示可以指定任何类型的值。一般用于声明 dom 节点）🌟⚠️注意：把一个 any 的类型赋值给其他变量，其他变量也会变成 any！！
+var numSth; //相当于关闭了类型检测，跟 js 一样了，不建议使用
+numSth = 996;
+// num = numSth //把这样会把 num 污染成 any 类型的变量！
+var numXX = 123;
+numXX = 'str';
+numXX = true;
+var boxEl = document.getElementById('box'); // 声明一个 dom 节点
+boxEl.style.color = 'pink';
 // null 和 undefined 类型
-// let num:undefined;
-// console.log(num); // 输出：undefined 正确
-// let num:number | undefined; // | 表示或者
-// console.log(num); // 正确
-// num = 123;
-// console.log(num); // 正确
-// let num:null;
-// num = null;
-// 一个变量可能是 number 类型，可能是 null，可能是 undefined
-// let num:number | null | undefined;
-// num = 1234;
-// void 类型(typescript 中的 void 表示没有任何类型，一般用于定义方法的时候方法没有返回值)
-// function fn ():void { // 正确的写法
-//   console.log('fn);
-// }
-// fn();
+var numZZ;
+console.log(numZZ); // 输出：undefined 正确
+var numYY; // | 表示或者
+console.log(numYY); // 正确
+numYY = 123;
+console.log(numYY); // 正确
+var numFF;
+numFF = null;
+//一个变量可能是 number 类型，可能是 null，可能是 undefined
+var numQQ;
+numQQ = 1234;
+//unknown 跟 any 类似，好处是不会污染其他变量，🌟比如把一个 any 的类型赋值给其他变量，其他变量也会变成 any，unknown 就不会
+var et;
+et = 10;
+et = 'hello';
+et = true;
+//👇类型断言（告诉编译器 supe 就是字符串类型）
+var supe;
+supe = et;
+supe = et;
+// void 类型(typescript 中的 void 表示没有任何类型，一般用于定义函数的时候，🔥🔥不会return 出返回值的情况)
+function fn() {
+    console.log(fn);
+}
+fn();
 // function fn ():undefined { // 错误的写法
 //   console.log('fn);
 // }
 // fn();
-// never 类型
-// let a:never;
-// a = 123; // 错误的写法
-// a = (() => { // 正确的写法
-//   throw new Error('错误');
-// })()
+// never 类型(没有值，不会返回结果，一般用于报错)
+//声明式函数
+function fn22() {
+    throw new Error('错误'); //一定得有个 throw 抛出错误
+}
+(function test() { alert('你好'); })(), //立即执行函数
+    (function () { alert('你好'); })(); //立即执行你们函数,!为取反
+//函数表达式
+var aee; // aee = 123; // 错误的写法
+aee = (function () {
+    throw new Error('错误');
+})();
 // object 对象类型
-// let obj:object;
+// let obj:object //(因为一切都是对象，所以一般不会这么写)
 // obj = {name: 'Wang', age: 25};
+//🌟🌟一般是去限制对象内包含有哪些属性, 🌟🌟 ? 为可选项，可有此属性，没有也不必报错
+var bc;
+bc = {
+    name: 'Wang',
+    age: 18
+};
+//🌟🌟🌟（常用）还可以这么写，必须有字符串的 name ，🌟🌟剩余的也可以传但不做限制,用 any 的方式！！[propName:string] 表示任意字符串的属性名,:any 表示任意类型的值
+var zz;
+zz = { name: 'zen', age: 18 };
 //🔥Ts 函数声明 ——————————————————————————————————————————————————————————
+//有返回值的函数
 function fn1() {
     return 123;
 }
 fn1();
-// 匿名函数
+// 没有返回值的匿名函数
 var fn2 = function () {
     console.log(456);
 };
 fn2();
+// 设置函数的类型声明(🌟🌟表示希望 kk 这个函数内有【两个参数】，并且都是 number 类型)
+var kk; //返回值是 number
+kk = function (ak, bk) {
+    return ak + bk;
+};
 // 传参
 function fn3(name, age) {
     return "\u59D3\u540D\uFF1A".concat(name, "\uFF0C\u5E74\u9F84\uFF1A").concat(age);
@@ -234,6 +287,7 @@ var Animal = /** @class */ (function () {
     };
     return Animal;
 }());
+//多态一
 var Dog = /** @class */ (function (_super) {
     __extends(Dog, _super);
     function Dog(name) {
@@ -244,6 +298,7 @@ var Dog = /** @class */ (function (_super) {
     };
     return Dog;
 }(Animal));
+//多态二
 var Cat = /** @class */ (function (_super) {
     __extends(Cat, _super);
     function Cat(name) {
@@ -327,3 +382,4 @@ var getData333 = function (value) {
 };
 getData333('abc');
 // getData333(123); // 错误
+var aa = true;

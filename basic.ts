@@ -1,15 +1,19 @@
 console.log('hello')
 //https://esnail.github.io/ts-gitbook/book/chapter2/readme.html
 
+//🌟可以给变量、函数的行参/返回值、数组内的对象做类型的声明
 //🔥Ts 基础数据类型 ——————————————————————————————————————————————————————————
   // boolean（布尔类型）
       let flag:boolean = true
       flag = false
 
+      //用 | 赋值多个字面量或者多个类型 ———— 联合类型
+      let lk: '1' | '2'
+      let ll: boolean | string
 
 
   // number（数字类型）
-      let num:number = 123;
+      let num:number = 123
       num = 456
 
 
@@ -77,7 +81,12 @@ console.log('hello')
 
 
 
-  // any（任意类型, 表示可以指定任何类型的值。一般用于声明 dom 节点）
+  // any（任意类型, 表示可以指定任何类型的值。一般用于声明 dom 节点）🌟⚠️注意：把一个 any 的类型赋值给其他变量，其他变量也会变成 any！！
+      let numSth:any  //相当于关闭了类型检测，跟 js 一样了，不建议使用
+      numSth = 996
+      // num = numSth //把这样会把 num 污染成 any 类型的变量！
+
+
       let numXX:any = 123;
       numXX = 'str';
       numXX = true;
@@ -107,9 +116,23 @@ console.log('hello')
       numQQ = 1234;
 
 
+      
+  //unknown 跟 any 类似，好处是不会污染其他变量，🌟比如把一个 any 的类型赋值给其他变量，其他变量也会变成 any，unknown 就不会
+      let et: unknown
+      et = 10
+      et = 'hello'
+      et = true
+
+      //👇类型断言（告诉编译器 supe 就是字符串类型）
+      let supe:string
+      supe = et as string
+      supe = <string>et
+
+  
 
 
-  // void 类型(typescript 中的 void 表示没有任何类型，一般用于定义方法的时候方法没有返回值)
+
+  // void 类型(typescript 中的 void 表示没有任何类型，一般用于定义函数的时候，🔥🔥不会return 出返回值的情况)
       function fn ():void { // 正确的写法
         console.log(fn);
       }
@@ -122,13 +145,25 @@ console.log('hello')
 
 
 
-  // never 类型
-      let aee:never;
-      // aee = 123; // 错误的写法
+  // never 类型(没有值，不会返回结果，一般用于报错)
+    //声明式函数
+    function fn22():never {
+      throw new Error('错误') //一定得有个 throw 抛出错误
+    }
+
+
+    (function test(){alert('你好')})(),//立即执行函数
+
+    (function(){alert('你好')})()//立即执行你们函数,!为取反
+
+
+    //函数表达式
+      let aee:never;  // aee = 123; // 错误的写法
       
       aee = (() => { // 正确的写法
         throw new Error('错误');
       })()
+
 
 
   // object 对象类型
@@ -152,92 +187,94 @@ console.log('hello')
 
 
 //🔥Ts 函数声明 ——————————————————————————————————————————————————————————
-function fn1 ():number { // number 是函数返回值类型，没有返回值为 void
-  return 123;
-}
 
-fn1();
+//有返回值的函数
+  function fn1 ():number { // number 是函数返回值类型，没有返回值为 void
+    return 123;
+  }
+
+  fn1();
 
 
 
-// 匿名函数
-let fn2 = function ():void {
-  console.log(456);
-}
-fn2();
+// 没有返回值的匿名函数
+  let fn2 = function ():void {
+    console.log(456);
+  }
+  fn2();
 
 
 
 // 设置函数的类型声明(🌟🌟表示希望 kk 这个函数内有【两个参数】，并且都是 number 类型)
-let kk: (ak:number, bk:number) => number //返回值是 number
-kk = function(ak:number,bk:number):number{
-  return ak + bk
-}
+  let kk: (ak:number, bk:number) => number //返回值是 number
+  kk = function(ak:number,bk:number):number{
+    return ak + bk
+  }
 
 
 
 
 
 // 传参
-function fn3 (name:string, age:number):string {
-  return `姓名：${name}，年龄：${age}`;
-}
-fn3('张三', 25);
+  function fn3 (name:string, age:number):string {
+    return `姓名：${name}，年龄：${age}`;
+  }
+  fn3('张三', 25);
 
 
 
 //ts 中实参和行参必须一样，如果不一样就需要配置可选参数, 可选参数必须配置到参数的最后面
-function getInfo (name:string, age?:number):string { // age 为可选参数,可以设置默认参数
-  if (age) {
-      return `姓名：${name}，年龄：${age}`;
-  } else {
-      return `姓名：${name}，年龄：保密`;
+  function getInfo (name:string, age?:number):string { // age 为可选参数,可以设置默认参数
+    if (age) {
+        return `姓名：${name}，年龄：${age}`;
+    } else {
+        return `姓名：${name}，年龄：保密`;
+    }
   }
-}
-console.log(getInfo('张三', 23));
-console.log(getInfo('李四'));
+  console.log(getInfo('张三', 23));
+  console.log(getInfo('李四'));
 
 
 
 //扩展运算符
-function sum (a:number, b:number, ...nums:number[]):number {
-  let sum = a + b;
-  nums.forEach((n) => {
-      sum += n;
-  });
-  return sum;
-}
-console.log(sum(1, 2, 3, 4, 5, 6)); // 21
+  function sum (a:number, b:number, ...nums:number[]):number {
+    let sum = a + b;
+    nums.forEach((n) => {
+        sum += n;
+    });
+    return sum;
+  }
+  console.log(sum(1, 2, 3, 4, 5, 6)); // 21
 
 
 
 
 //🔥ts 定义类
-class Person {
-  name:string; // 属性，前面省略了 public 关键词
-  
-  constructor (name:string) { // 构造函数，实例化类的时候触发的方法
-    this.name = name;
+  class Person {
+    name:string; // 属性，前面省略了 public 关键词
+    
+    constructor (name:string) { // 构造函数，实例化类的时候触发的方法
+      this.name = name;
+    }
+    
+    run ():void {
+      console.log(`${this.name}在运动`);
+    }
+    
+    getName ():string {
+      return this.name;
+    }
+    
+    setName (name:string):void {
+      this.name = name;
+    }
   }
-  
-  run ():void {
-    console.log(`${this.name}在运动`);
-  }
-  
-  getName ():string {
-    return this.name;
-  }
-  
-  setName (name:string):void {
-    this.name = name;
-  }
-}
 
 
-let p = new Person('李四');
-p.run();
-p.setName('王五');
-console.log(p.getName());
+  let p = new Person('李四');
+  p.run();
+  p.setName('王五');
+  console.log(p.getName());
 
 
 //类里面的修饰符, Typescript 里面定义属性的时候给我们提供了三种修饰符：
@@ -344,37 +381,38 @@ console.log(p.getName());
 
 
 //多态: 父类定义一个方法不去实现，让继承它的子类去实现，每一个子类有不同的表现
-class Animal {
-  name:string;
+  class Animal {
+    name:string;
 
-  constructor (name:string) {
-    this.name = name;
+    constructor (name:string) {
+      this.name = name;
+    }
+
+    eat () { // 🔥🔥具体吃什么,不知道。具体吃什么，由继承它的子类去实现，每一个子类的表现不一样
+      console.log('吃的方法');
+    }
   }
 
-  eat () { // 具体吃什么,不知道。具体吃什么，由继承它的子类去实现，每一个子类的表现不一样
-    console.log('吃的方法');
-  }
-}
 
-class Dog extends Animal {
-  constructor (name:string) {
-    super(name);
-  }
-
-  eat () { // 子类实现父类的 eat 方法
-    console.log(`${this.name}喜欢吃骨头`);
-  }
-}
-
-class Cat extends Animal {
-  constructor (name:string) {
-    super(name);
+  //多态一
+  class Dog extends Animal {
+    constructor (name:string) {
+      super(name);
+    }
+    eat () { // 子类实现父类的 eat 方法
+      console.log(`${this.name}喜欢吃骨头`);
+    }
   }
 
-  eat () { // 子类实现父类的 eat 方法
-    console.log(`${this.name}喜欢吃老鼠`);
+  //多态二
+  class Cat extends Animal {
+    constructor (name:string) {
+      super(name);
+    }
+    eat () { // 子类实现父类的 eat 方法
+      console.log(`${this.name}喜欢吃老鼠`);
+    }
   }
-}
 
 
 //抽象类:
@@ -385,113 +423,116 @@ class Cat extends Animal {
 
 
 // 抽象类，标准
-abstract class Animal2 {
-  name:string;
+  abstract class Animal2 {
+    name:string;
 
-  constructor (name:string) {
-    this.name = name;
+    constructor (name:string) {
+      this.name = name;
+    }
+
+    abstract eat ():any; //🔥🔥 抽象方法不包含具体实现并且必须在派生类中实现。
   }
-
-  abstract eat ():any; //🔥🔥 抽象方法不包含具体实现并且必须在派生类中实现。
-}
-// let animal2 = new Animal2(); // 错误，抽奖类不能被实例化
+  // let animal2 = new Animal2(); // 错误，抽奖类不能被实例化
 
 
 
-class Dog2 extends Animal2 {
-  constructor (name:string) {
-    super(name);
+  class Dog2 extends Animal2 {
+    constructor (name:string) {
+      super(name);
+    }
+
+    eat () { // 抽象类的子类必须实现抽象类里面的抽象方法
+      console.log(`${this.name}喜欢吃骨头`);
+    }
   }
-
-  eat () { // 抽象类的子类必须实现抽象类里面的抽象方法
-    console.log(`${this.name}喜欢吃骨头`);
-  }
-}
-let dog = new Dog2('小黑');
-dog.eat();
+  let dog = new Dog2('小黑');
+  dog.eat();
 
 
 
 //🔥泛型函数(可以支持不特定的数据类型, 并且还能保证类型检查， 场景比如 API 的复用)
 
 //👇指定返回值的类型
-function getData<T> (val:T):T { // 👇泛型函数，<T> 指定了这个函数的类型！
-  return val;
-}
-getData<number>(124);
-getData<string>('abc');
-// getData<number>('abc'); // 错误
+  function getData<T> (val:T):T { // 👇泛型函数，<T> 指定了这个函数的类型！
+    return val;
+  }
+  getData<number>(124);
+  getData<string>('abc');
+  // getData<number>('abc'); // 错误
 
 
 //👇不指定返回值的类型
-function getData2<T> (val:T):any {
-  return val + '***';
-}
-getData2<number>(124); // 参数必须是数字
-getData2<string>('abc');
+  function getData2<T> (val:T):any {
+    return val + '***';
+  }
+  getData2<number>(124); // 参数必须是数字
+  getData2<string>('abc');
 
 
 //比如有个最小堆算法，需要同时支持返回数字和字符串 a-z 两种类型。通过类的泛型来实现
-class minClass {
-  list:number[] = [];
+  class minClass {
+    list:number[] = [];
 
-  add (val:number):void {
-    this.list.push(val);
-  }
-
-  min ():number {
-    let minNum:number = this.list[0];
-    for(let i = 0; i < this.list.length; i++) {
-      if(minNum > this.list[i]){
-          minNum = this.list[i];
-      }
+    add (val:number):void {
+      this.list.push(val);
     }
-    return minNum;
+
+    min ():number {
+      let minNum:number = this.list[0];
+      for(let i = 0; i < this.list.length; i++) {
+        if(minNum > this.list[i]){
+            minNum = this.list[i];
+        }
+      }
+      return minNum;
+    }
   }
-}
-let m = new minClass();
-m.add(3);
-m.add(2);
-m.add(23);
-console.log(m.min()); // 2
+  let m = new minClass();
+  m.add(3);
+  m.add(2);
+  m.add(23);
+  console.log(m.min()); // 2
 
 
 
 //泛型接口
 //函数类型接口
-// interface configFn{
-//     (val1:string, val2:string):string;
-// }
+  // interface configFn{
+  //     (val1:string, val2:string):string;
+  // }
 
-// let setData222:configFn = function (value11:string, value22:string):string { // 参数名可以和接口中的不一致，但是参数类型必须一致
-//     return value11 + value22;
-// }
+  // let setData222:configFn = function (value11:string, value22:string):string { // 参数名可以和接口中的不一致，但是参数类型必须一致
+  //     return value11 + value22;
+  // }
 
-// setData222('1', '2');
+  // setData222('1', '2');
 
 
 
 
 //泛型接口实现方式1：
-interface configFn {
-  <T>(val:T):T;
-}
+  interface configFn {
+    <T>(val:T):T;
+  }
 
-let getData33:configFn = function<T> (value:T):T {
-  return value;
-}
+  let getData33:configFn = function<T> (value:T):T {
+    return value;
+  }
 
-getData33<string>('abc');
-getData33<number>(123);
+  getData33<string>('abc');
+  getData33<number>(123);
 
 
 
 //泛型接口实现方式2：
-interface configFn333<T> {
-  (val:T):T;
-}
-let getData333:configFn333<string> = function<T> (value:T):T {
-  return value;
-}
-getData333('abc');
-// getData333(123); // 错误
+  interface configFn333<T> {
+    (val:T):T;
+  }
+  let getData333:configFn333<string> = function<T> (value:T):T {
+    return value;
+  }
+  getData333('abc');
+  // getData333(123); // 错误
+
+
+  let aa:boolean = false;
