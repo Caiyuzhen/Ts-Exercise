@@ -3,92 +3,117 @@ console.log('hello')
 
 //🔥Ts 基础数据类型 ——————————————————————————————————————————————————————————
   // boolean（布尔类型）
-      // let flag:boolean = true
-      // flag = false
+      let flag:boolean = true
+      flag = false
 
 
 
   // number（数字类型）
-      // let num:number = 123;
-      // num = 456
+      let num:number = 123;
+      num = 456
 
 
 
   // string（字符串类型）
-      // let str:string = 'this is ts'
-      // str = 'test'
+      let str:string = 'this is ts'
+      str = 'test'
 
 
 
   // array（数组类型）
-      // let arr:string[] = ['12', '23']
-      // arr = ['45', '56']
+      let arrABC:string[] = ['12', '23']
+      arrABC = ['45', '56']
+
+      let arrCCC:Array<number> //表示数字类型的数组
+      arrCCC = [1, 2, 3]
 
 
 
-  // tuple（元组类型,属于数组的一种,后续实例的类型得一致）
-      //let tupleArr:[number, string, boolean] = [12, '34', true]
+  // tuple（元组类型,属于数组的一种,就是【固定长度】跟【类型】的数组,比如下面这个就是【固定】只有三个内容，【三种类型】）
+      let tupleArr:[number, string, boolean] = [12, '34', true]
 
 
 
   // enum（枚举类型）
-      // enum statusCode {
-      //   success,
-      //   fail,
-      //   pending
-      // }
+      enum statusCode {
+        success,
+        fail,
+        pending
+      }
 
-      // let res:statusCode = statusCode.success;
-      // console.log(res); // 0，如果标识符没有赋值，它的值就是下标，默认从 0 开始
+      //相当于从 statusCode 列举d出 success
+      let res:statusCode = statusCode.success;
+      console.log(res); // 0，如果标识符没有赋值，它的值就是下标，默认从 0 开始
 
 
-      // enum statusCode {
-      //   success = 2,
-      //   fail,
-      //   pending
-      // }
+      enum statusCode {
+        success1 = 2,
+        fail2,
+        pending3
+      }
 
-      // let res1:statusCode = statusCode.success;
-      // console.log(res1) // 2，指定的值
+      let res1:statusCode = statusCode.success;
+      console.log(res1) // 2，指定的值
 
-      // let res3:statusCode = statusCode.fail;
-      // console.log(res1) // 3，若没指定，从指定的往后开始
+      let res3:statusCode = statusCode.fail;
+      console.log(res1) // 3，若没指定，从指定的往后开始
+
+
+
+      
+      //枚举的场景，比如先定义一个枚举数组，然后再定义一个数据去使用枚举数组内的值
+      enum Gender {
+        Male = 0,
+        Female = 1
+      }
+
+      let ii:{name:string,gender:Gender}
+      ii = {
+        name:'Wang', 
+        gender:Gender.Male
+      }
+
+      console.log(ii.gender === Gender.Female)
 
 
 
   // any（任意类型, 表示可以指定任何类型的值。一般用于声明 dom 节点）
-      //let num:any = 123;
-      // num = 'str';
-      // num = true;
+      let numXX:any = 123;
+      numXX = 'str';
+      numXX = true;
 
-      // let boxEl:any = document.getElementById('box'); // 声明一个 dom 节点
-      // boxEl.style.color = 'pink';
+      let boxEl:any = document.getElementById('box'); // 声明一个 dom 节点
+      boxEl.style.color = 'pink';
 
 
 
   // null 和 undefined 类型
-      // let num:undefined;
-      // console.log(num); // 输出：undefined 正确
+      let numZZ:undefined;
+      console.log(numZZ); // 输出：undefined 正确
 
-      // let num:number | undefined; // | 表示或者
-      // console.log(num); // 正确
-      // num = 123;
-      // console.log(num); // 正确
 
-      // let num:null;
-      // num = null;
+      let numYY:number | undefined; // | 表示或者
+      console.log(numYY); // 正确
+      numYY = 123;
+      console.log(numYY); // 正确
 
-      // 一个变量可能是 number 类型，可能是 null，可能是 undefined
-      // let num:number | null | undefined;
-      // num = 1234;
+
+      let numFF:null;
+      numFF = null;
+
+
+      //一个变量可能是 number 类型，可能是 null，可能是 undefined
+      let numQQ:number | null | undefined;
+      numQQ = 1234;
+
 
 
 
   // void 类型(typescript 中的 void 表示没有任何类型，一般用于定义方法的时候方法没有返回值)
-      // function fn ():void { // 正确的写法
-      //   console.log('fn);
-      // }
-      // fn();
+      function fn ():void { // 正确的写法
+        console.log(fn);
+      }
+      fn();
       
       // function fn ():undefined { // 错误的写法
       //   console.log('fn);
@@ -98,17 +123,30 @@ console.log('hello')
 
 
   // never 类型
-      // let a:never;
-      // a = 123; // 错误的写法
+      let aee:never;
+      // aee = 123; // 错误的写法
       
-      // a = (() => { // 正确的写法
-      //   throw new Error('错误');
-      // })()
+      aee = (() => { // 正确的写法
+        throw new Error('错误');
+      })()
 
 
   // object 对象类型
-      // let obj:object;
+      // let obj:object //(因为一切都是对象，所以一般不会这么写)
       // obj = {name: 'Wang', age: 25};
+
+      //🌟🌟一般是去限制对象内包含有哪些属性, 🌟🌟 ? 为可选项，可有此属性，没有也不必报错
+      let bc: {name:string, age?:number}
+
+      bc = {
+        name: 'Wang',
+        age:18
+      }
+
+      //🌟🌟🌟（常用）还可以这么写，必须有字符串的 name ，🌟🌟剩余的也可以传但不做限制,用 any 的方式！！[propName:string] 表示任意字符串的属性名,:any 表示任意类型的值
+      let zz:{name:string,[propName:string]:any}
+      zz = {name:'zen', age:18}
+
 
 
 
@@ -127,6 +165,16 @@ let fn2 = function ():void {
   console.log(456);
 }
 fn2();
+
+
+
+// 设置函数的类型声明(🌟🌟表示希望 kk 这个函数内有【两个参数】，并且都是 number 类型)
+let kk: (ak:number, bk:number) => number //返回值是 number
+kk = function(ak:number,bk:number):number{
+  return ak + bk
+}
+
+
 
 
 
