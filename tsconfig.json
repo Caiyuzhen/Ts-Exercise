@@ -16,14 +16,33 @@
 
   "compilerOptions": {//🔥最重要，决定以编译器如何编译
 
-    //Basics
-    "target": "ES6",      /* 设置将要编译成的 JavaScript 版本 */
-    "module": "ES6", /* tsc使用哪种模块化的规范 */  
-    // "lib": ["dom"],    /* 使用哪些第三方库,会根据这些库去检查你的代码,🔥一般不需要设置 */                               
-    
+    // 🚀编译语法相关
+    "target": "ES6",              /* 设置将要编译成的 JavaScript 版本 */
+    "module": "ES6",              /* tsc使用哪种模块化的规范 */  
+    // "lib": ["dom"],            /* 使用哪些第三方库,会根据这些库去检查你的代码,🔥一般不需要设置 */                               
+    // "alwaysStrict": true,      /* 编译后的 Js 文件为严格模式 */
+    "strict": true, /* 严格检查的总开关，这个一开下面三个自动都打开 */
+    // "noImplicitAny": true,     /*🔥不允许隐式的 Any 类型（ts 自动帮你转为 Any）*/
+    // "noImplicitThis": true,    /*不允许不明类型的定义，比如 this*/
+    "strictNullChecks": true,     /*🔥比如可以确保 getEle 的结果不是 Null */
 
-    /* Projects */
-    "outDir": "./dist", /* 🔥🔥指定编译完的输出目录（比如一个放 ts 源码，一个放编译后的 js */                                 
+
+    // 🚀编译文件相关
+    "outDir": "./dist",    /* 🔥🔥指定编译完的输出目录（比如一个文件夹放 ts 源码，另一个文件夹放编译后的 js */                                 
+    // "outFile": "./",    /*合并所有全局作用域的代码（基本不会用）*/
+    // "allowJs": true,    /*指将要被编译的文件夹是否包含 Js，比如有些模块是用 Js 写的*/
+    // "checkJs": true,    /*检查 js 代码是否符合 ts 规范*/
+    "removeComments": true,     /*编译后移除注释*/
+    // "noEmit": true,          /*编译后不会产生 Js 文件（基本不会用）*/
+    // "noEmitHelpers": true,                          
+    "noEmitOnError": true,      /*🔥如果 ts 报错则暂停编译*/
+
+
+
+
+
+
+
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
     // "composite": true,                                /* Enable constraints that allow a TypeScript project to be used with project references. */
     // "tsBuildInfoFile": "./.tsbuildinfo",              /* Specify the path to .tsbuildinfo incremental compilation file. */
@@ -54,17 +73,12 @@
     // "resolveJsonModule": true,                        /* Enable importing .json files. */
     // "noResolve": true,                                /* Disallow 'import's, 'require's or '<reference>'s from expanding the number of files TypeScript should add to a project. */
     /* JavaScript Support */
-    // "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
-    // "checkJs": true,                                  /* Enable error reporting in type-checked JavaScript files. */
     // "maxNodeModuleJsDepth": 1,                        /* Specify the maximum folder depth used for checking JavaScript files from 'node_modules'. Only applicable with 'allowJs'. */
     /* Emit */
     // "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     // "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
     // "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
-    // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
-    // "removeComments": true,                           /* Disable emitting comments. */
-    // "noEmit": true,                                   /* Disable emitting files from a compilation. */
     // "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
     // "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types. */
     // "downlevelIteration": true,                       /* Emit more compliant, but verbose and less performant JavaScript for iteration. */
@@ -75,8 +89,6 @@
     // "emitBOM": true,                                  /* Emit a UTF-8 Byte Order Mark (BOM) in the beginning of output files. */
     // "newLine": "crlf",                                /* Set the newline character for emitting files. */
     // "stripInternal": true,                            /* Disable emitting declarations that have '@internal' in their JSDoc comments. */
-    // "noEmitHelpers": true,                            /* Disable generating custom helper functions like '__extends' in compiled output. */
-    // "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
     // "preserveConstEnums": true,                       /* Disable erasing 'const enum' declarations in generated code. */
     // "declarationDir": "./",                           /* Specify the output directory for generated declaration files. */
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
@@ -87,15 +99,10 @@
     // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
     /* Type Checking */
-    "strict": true, /* Enable all strict type-checking options. */
-    // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
-    // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
     // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
     // "strictBindCallApply": true,                      /* Check that the arguments for 'bind', 'call', and 'apply' methods match the original function. */
     // "strictPropertyInitialization": true,             /* Check for class properties that are declared but not set in the constructor. */
-    // "noImplicitThis": true,                           /* Enable error reporting when 'this' is given the type 'any'. */
     // "useUnknownInCatchVariables": true,               /* Default catch clause variables as 'unknown' instead of 'any'. */
-    // "alwaysStrict": true,                             /* Ensure 'use strict' is always emitted. */
     // "noUnusedLocals": true,                           /* Enable error reporting when local variables aren't read. */
     // "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
     // "exactOptionalPropertyTypes": true,               /* Interpret optional property types as written, rather than adding 'undefined'. */
