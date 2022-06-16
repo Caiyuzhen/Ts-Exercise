@@ -20,3 +20,18 @@ console.log(Promise)
 
 console.log(sum(123,456));
 console.log(hi)
+
+
+
+//定义一个类
+class Person{
+  name:string;
+  age:number;
+  constructor() {
+    this.name = "ming",
+    this.age = 18
+  }
+} 
+
+const Lee = new Person()
+console.log(Lee);

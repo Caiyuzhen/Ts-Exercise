@@ -253,7 +253,7 @@ console.log('hello')
 
 
 
-//🔥ts 定义类
+//🔥ts 定义类 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   class Person {
     name:string; // 属性，前面省略了 public 关键词
     
@@ -275,10 +275,10 @@ console.log('hello')
   }
 
 
-  let p = new Person('李四');
-  p.run();
-  p.setName('王五');
-  console.log(p.getName());
+  let po = new Person('李四');
+  po.run();
+  po.setName('王五');
+  console.log(po.getName());
 
 
 //类里面的修饰符, Typescript 里面定义属性的时候给我们提供了三种修饰符：

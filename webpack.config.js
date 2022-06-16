@@ -20,6 +20,7 @@ module.exports = {
       arrowFunction: false //🔥不使用箭头函数
     }
   },
+  mode: 'production',//指定打包模式(development 开发模式，开发模式，production 生产模式)
 
   //如何编译？指定打包时使用的模块
   module: {
@@ -49,7 +50,7 @@ module.exports = {
         // 指定要排除的文件（一般排除node_modules)
         exclude: /node_modules/
       }
-    ]
+    ],
   },
 
   //🔥🔥配置 webpack 插件
