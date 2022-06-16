@@ -71,7 +71,11 @@ console.log('hello')
         Female = 1
       }
 
-      let ii:{name:string,gender:Gender}
+      let ii:{
+        name:string,
+        gender:Gender
+      }
+      
       ii = {
         name:'Wang', 
         gender:Gender.Male
