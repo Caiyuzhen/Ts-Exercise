@@ -49,6 +49,15 @@ module.exports = {
           },'ts-loader'], //因为加载器是从后往前执行的，所以这里先加载 ts-loader，把 ts 转为 js ，然后再用 js 去适配浏览器！
         // 指定要排除的文件（一般排除node_modules)
         exclude: /node_modules/
+      },
+      {
+        //指定设置 less 文件的 loader
+        test: /\.less$/,
+        use: [ //⚠️⚠️，loader 的执行顺序是由下往上
+          "style-loader",
+          "css-loader",
+          "less-loader"
+        ]
       }
     ],
   },
