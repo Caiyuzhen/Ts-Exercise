@@ -60,12 +60,12 @@ module.exports = {
           loader: "postcss-loader",
           options:{
             postcssOptions:{
-              plugins:[
+              plugins:[[
                 "postcss-preset-env",
                 {
                   browers:"last 2 versions"//兼容两个版本的浏览器
                 }//设置浏览器的兼容性
-              ]
+              ]]
             }
           }
         },
