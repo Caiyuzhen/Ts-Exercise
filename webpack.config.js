@@ -54,10 +54,23 @@ module.exports = {
         //指定设置 less 文件的 loader
         test: /\.less$/,
         use: [ //⚠️⚠️，loader 的执行顺序是由下往上
-          "style-loader",
-          "css-loader",
-          "less-loader"
-        ]
+        "style-loader",
+        "css-loader",
+        {
+          loader: "postcss-loader",
+          options:{
+            postcssOptions:{
+              plugins:[
+                "postcss-preset-env",
+                {
+                  browers:"last 2 versions"//兼容两个版本的浏览器
+                }//设置浏览器的兼容性
+              ]
+            }
+          }
+        },
+        "less-loader"
+      ]
       }
     ],
   },
